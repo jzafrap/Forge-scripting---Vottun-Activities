@@ -1,5 +1,18 @@
 ## Forge fuzzy logic test and scripting samples -  Vottun activities 
 This repo is a complete example of how to using fuzzy logic in forge tests applied to full coverage tests.
+Fuzzy logic test allow the testing of smart contract methods with different values in their calling params, so calling 100 iterations give the same result of testing the method with 100 diferent values in params.
+as an example, this test:
+```
+   function testFuzz_Deposit(uint256 x) public {
+        vm.startPrank(DEPOSITOR_ADDRESS);
+        vm.deal(DEPOSITOR_ADDRESS, x); 
+        privateBank.deposit{value:x}();
+        assertEq(privateBank.getUserBalance(DEPOSITOR_ADDRESS), x);
+       
+    }
+will pass a different uint256 value to x in every iteration, and allow testing expected execution of method for those different values of x.
+```
+
 The repo contains:
 - src/[PrivateBank.sol](https://github.com/jzafrap/Forge-scripting---Vottun-Activities/blob/main/src/PrivateBank.sol): example smart contract implementing a private bank, target for full coverage tests.
 - src/[NetworkConfig.sol](https://github.com/jzafrap/Forge-scripting---Vottun-Activities/blob/main/src/NetworkConfig.sol): utility smart contract for easy deployment of the smart contract in different chains.
