@@ -1,66 +1,42 @@
-## Foundry
-
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
+## Forge fuzzy logic test and scripting samples -  Vottun activities 
+This repo is a complete example of how to using fuzzy logic in forge tests applied to full coverage tests.
+The repo contains:
+- src/[PrivateBank.sol](https://github.com/jzafrap/Forge-scripting---Vottun-Activities/src/PrivateBank.sol): example smart contract implementing a private bank, target for full coverage tests.
+- src/NetworkConfig.sol: utility smart contract for easy deployment of the smart contract in different chains.
+- test/privateBank.t.sol: full coverage test of PrivateBank smart contract, implemented in solidity
+- script/deploy.s.sol: script for deployment the smart contract in different chains from forge line command.
 
 ## Usage
 
-### Build
+### Build: compile the smart contracts
 
 ```shell
 $ forge build
 ```
 
-### Test
+### Test: execute full coverage tests, including fuzzy logic tests.
 
 ```shell
 $ forge test
 ```
+```
+[⠊] Compiling...
+No files changed, compilation skipped
 
-### Format
+Ran 4 tests for test/PrivateBank.t.sol:PrivateBankTest
+[PASS] testFuzz_Deposit(uint256) (runs: 256, μ: 41014, ~: 41430)
+[PASS] testFuzz_Withdraw(uint256) (runs: 256, μ: 33576, ~: 33578)
+[PASS] testWithdraw() (gas: 32980)
+[PASS] test_Deposit() (gas: 40835)
+Suite result: ok. 4 passed; 0 failed; 0 skipped; finished in 17.00ms (26.25ms CPU time)
 
-```shell
-$ forge fmt
+Ran 1 test suite in 17.54ms (17.00ms CPU time): 4 tests passed, 0 failed, 0 skipped (4 total tests)
 ```
 
-### Gas Snapshots
+### Deploy: execute script for deployment of smart contract in any of preconfigured chains
 
 ```shell
-$ forge snapshot
+$ forge script deploy --network  goerly --private-key <your_private_key>
 ```
 
-### Anvil
 
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
